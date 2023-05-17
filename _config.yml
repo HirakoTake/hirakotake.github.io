@@ -1,0 +1,32 @@
+title: n0b1ta's Blog - A Simple CyberSec Blog
+description: ""
+author:
+  name: "n0b1ta"
+  email: "n0b1ta@onebit.tk"
+  url: "http://n0b1ta.github.io/"
+
+baseurl: /
+
+source: .
+destination: ./_site
+permalink: /:title
+paginate: 5
+paginate_path: /page/:num/
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
+future: true
+plugins:
+  - jekyll-seo-tag
+  - jekyll-paginate
+  - jekyll-sitemap
+
+# Custom variables
+owner : "n0b1ta"
+year : "2022"

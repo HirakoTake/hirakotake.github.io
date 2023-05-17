@@ -1,9 +1,9 @@
-title: n0b1ta's Blog - A Simple CyberSec Blog
+title: 平子丈 - 一个路人甲而已
 description: ""
 author:
-  name: "n0b1ta"
-  email: "n0b1ta@onebit.tk"
-  url: "http://n0b1ta.github.io/"
+  name: "平子丈"
+  email: "admin@github.com"
+  url: "https://hirakotake.github.io/"
 
 baseurl: /
 
@@ -28,5 +28,5 @@ plugins:
   - jekyll-sitemap
 
 # Custom variables
-owner : "n0b1ta"
-year : "2022"
+owner : "平子丈"
+year : "2023"

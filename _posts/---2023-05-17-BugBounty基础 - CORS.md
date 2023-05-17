@@ -54,5 +54,4 @@ def CheckCORS(url):
 if __name__ == "__main__":
     CheckCORS(url)
     
-
 ```

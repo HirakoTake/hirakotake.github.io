@@ -1,3 +1,8 @@
+---
+layout: post
+title: BugBounty基础 - CORS
+---
+
 ## 代码实现
 
 

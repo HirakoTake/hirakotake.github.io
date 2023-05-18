@@ -38,9 +38,11 @@ Invalid user: <svg/onload=alert(1)>
 
 ### 一种对Origin头过滤的案例及绕过
 
-```json
+```
 SetEnvIf Origin "^https?:\/\/(.*\.)?xxe.sh([^\.\-a-zA-Z0-9]+.*)?" AccessControlAllowOrigin=$0Header set Access-Control-Allow-Origin %{AccessControlAllowOrigin}e env=AccessControlAllowOrigin
 ```
+
+正则解释
 
 ```
 [^\.\-a-zA-Z0-9] = does not match these characters: "." "-" "a-z" "A-Z" "0-9"+ = a quantifier, matches above chars one or unlimited times (greedy).* = any character(s) except for line terminators

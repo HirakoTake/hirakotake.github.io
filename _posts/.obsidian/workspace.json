@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "b00ba1ace458a01e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "2023-5-17-BugBounty基础-CORS.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -62,6 +75,14 @@
             "type": "leaf",
             "state": {
               "type": "starred",
+              "state": {}
+            }
+          },
+          {
+            "id": "49198fc9f40b843d",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
               "state": {}
             }
           }
@@ -146,6 +167,6 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "394c9c9d7c2ec5a5",
+  "active": "b00ba1ace458a01e",
   "lastOpenFiles": []
 }
